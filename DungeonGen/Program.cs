@@ -6,7 +6,7 @@ namespace DungeonGen
     {
         static void Main(string[] args)
         {
-            gridMap map = new gridMap(30, 40, 4);
+            gridMap map = new gridMap(80, 60, 4);
             map.printMap();
         }
     }
