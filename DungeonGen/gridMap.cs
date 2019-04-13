@@ -83,9 +83,9 @@ private Dictionary<Tuple<int, int>, byte> mapGrid;
                 {
                 Console.WriteLine("Room " + rmN + ": (" + room.Item1.Item1 + "," + room.Item1.Item2 + ")" + "," + "(" + room.Item2.Item1 + ", " + room.Item2.Item2 + ")");
                 rmN++;
-                IEnumerable<int> xRange = Enumerable.Range(room.Item1.Item1, room.Item2.Item1);
-                IEnumerable<int> yRange = Enumerable.Range(room.Item1.Item2, room.Item2.Item2);
-                foreach(int x in xRange)
+                IEnumerable<int> xRange = Enumerable.Range(room.Item1.Item1, room.Item2.Item1 - room.Item1.Item1);
+                IEnumerable<int> yRange = Enumerable.Range(room.Item1.Item2, room.Item2.Item2 - room.Item1.Item2);
+                foreach (int x in xRange)
                     {
                     foreach(int y in yRange)
                         {
@@ -107,14 +107,16 @@ private Dictionary<Tuple<int, int>, byte> mapGrid;
                 int lim = 0;
                 while (true)
                     {
+                    // Generate upper left corner of room. From point 1 to mapsize - roomsize - 2
                     anchorPos = new Tuple<int, int>(random.Next(1, this.dim_x - (maxSz + 2)), random.Next(1, this.dim_y - (maxSz + 2)));
+                    // Generate lower right corner of room. From 
                     oppPos = new Tuple<int, int>(anchorPos.Item1 + (random.Next(minSz, maxSz) - 1), anchorPos.Item2 + (random.Next(minSz, maxSz) - 1));
                     if (checkOverlap(anchorPos, oppPos, rmLst) && (anchorPos.Item1 < oppPos.Item1) && (anchorPos.Item2 < oppPos.Item2))
                         {
                         rmLst.Add(new Tuple<Tuple<int, int>, Tuple<int, int>>(anchorPos, oppPos));
                         break;
                         }
-                    if (lim == 20) break;
+                    if (lim == 200) break;
                     lim++;
                     }
                 }
@@ -123,51 +125,45 @@ private Dictionary<Tuple<int, int>, byte> mapGrid;
 
         private bool checkOverlap(Tuple<int, int> anchorPos, Tuple<int, int> oppPos, List<Tuple<Tuple<int, int>, Tuple<int, int>>> rLst)
             {
-       
+
             int cX1 = anchorPos.Item1;
             int cY1 = anchorPos.Item2;
             int cX2 = oppPos.Item1;
             int cY2 = oppPos.Item2;
-            List<int> cXRange = new List<int>();
-            List<int> cYRange = new List<int>();
-            int refX1, refX2, refY1, refY2;
 
-            for (int x = 0; x < (cX2 - cX1); x++)
-                {
-                cXRange.Add(x);
-                }
-            for (int y = 0; y < (cY2 - cY1); y++)
-                {
-                cXRange.Add(y);
-                }
 
+            IEnumerable<int> cXRange = Enumerable.Range(cX1, (cX2 - cX1));
+            IEnumerable<int> cYRange = Enumerable.Range(cY1, (cY2 - cY1));
+
+            if (rLst.Count == 0)
+                {
+                return true;
+                }
+            else
+                { 
             foreach (Tuple<Tuple<int, int>, Tuple<int, int>> room in rLst)
                 {
-                refX1 = room.Item1.Item1;
-                refY1 = room.Item1.Item2;
-                refX2 = room.Item2.Item1;
-                refY2 = room.Item2.Item2;
-                List<int> refXRange = new List<int>();
-                List<int> refYRange = new List<int>();
-                for (int rx = 0; rx < (refX2 - refX1); rx++)
-                    {
-                    refXRange.Add(rx);
-                    }
-                for (int ry = 0; ry < (refY2 - refY1); ry++)
-                    {
-                    refYRange.Add(ry);
-                    }
-                if (cXRange.Any(x => refXRange.Any(y => y == x)) && cYRange.Any(x => refYRange.Any(y => y == x)))
-                    {
-                    return false;
-                    }
-                else
+                int refX1 = room.Item1.Item1;
+                int refY1 = room.Item1.Item2;
+                int refX2 = room.Item2.Item1;
+                int refY2 = room.Item2.Item2;
+                IEnumerable<int> refXRange = Enumerable.Range(refX1 - 1, (refX2 - refX1) - 1);
+                IEnumerable<int> refYRange = Enumerable.Range(refY1 - 1, (refY2 - refY1) - 1);
+                var xinter = cXRange.Intersect(refXRange).DefaultIfEmpty();
+                var yinter = cYRange.Intersect(refYRange).DefaultIfEmpty();
+                    Console.WriteLine(xinter.ElementAt(0));
+
+                    if (xinter.ElementAt(0) == 0 && yinter.ElementAt(0) == 0)
                     {
                     return true;
                     }
+                else
+                    {
+                    return false;
+                    }
 
-                }
-            return true;
+                } }
+            return false;
             }
 
         public void printMap()

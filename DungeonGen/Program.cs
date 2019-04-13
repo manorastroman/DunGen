@@ -22,7 +22,7 @@ namespace DungeonGen
     {
         static void Main(string[] args)
         {
-            gridMap map = new gridMap(80, 60, 4);
+            gridMap map = new gridMap(80, 60, 12);
             map.printMap();
         }
     }

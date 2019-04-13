@@ -1,24 +1,26 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\axw82ch\\source\\repos\\DunGen\\DungeonGen\\DungeonGen.csproj": {}
+    "C:\\Users\\aaron\\source\\Repos\\DunGen\\DungeonGen\\DungeonGen.csproj": {}
   },
   "projects": {
-    "C:\\Users\\axw82ch\\source\\repos\\DunGen\\DungeonGen\\DungeonGen.csproj": {
+    "C:\\Users\\aaron\\source\\Repos\\DunGen\\DungeonGen\\DungeonGen.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\axw82ch\\source\\repos\\DunGen\\DungeonGen\\DungeonGen.csproj",
+        "projectUniqueName": "C:\\Users\\aaron\\source\\Repos\\DunGen\\DungeonGen\\DungeonGen.csproj",
         "projectName": "DungeonGen",
-        "projectPath": "C:\\Users\\axw82ch\\source\\repos\\DunGen\\DungeonGen\\DungeonGen.csproj",
-        "packagesPath": "C:\\Users\\axw82ch\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\axw82ch\\source\\repos\\DunGen\\DungeonGen\\obj\\",
+        "projectPath": "C:\\Users\\aaron\\source\\Repos\\DunGen\\DungeonGen\\DungeonGen.csproj",
+        "packagesPath": "C:\\Users\\aaron\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\aaron\\source\\Repos\\DunGen\\DungeonGen\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
+          "C:\\ProgramData\\Xamarin\\NuGet\\",
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\axw82ch\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "C:\\Users\\aaron\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
         ],
         "originalTargetFrameworks": [
           "netcoreapp2.1"
