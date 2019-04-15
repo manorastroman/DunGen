@@ -22,8 +22,8 @@ namespace DungeonGen
     {
         static void Main(string[] args)
         {
-            gridMap map = new gridMap(80, 60, 12);
-            map.printMap();
+            GridMap map = new GridMap(80, 60, 14);
+            map.PrintMap();
         }
     }
 }

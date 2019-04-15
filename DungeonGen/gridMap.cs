@@ -20,7 +20,7 @@ using System.Linq;
 
 namespace DungeonGen
     {
-    public class gridMap
+    public class GridMap
         {
         /* room byte values
          * 0 = Wall/unaccessable
@@ -45,25 +45,28 @@ namespace DungeonGen
          * 19 = ES corner coridor
          * 20 = Dead End coridor
          */
-private Dictionary<Tuple<int, int>, byte> mapGrid;
-        public int dim_x, dim_y, rooms;
+
+        // delcare mapGrid
+        private Dictionary<Tuple<int, int>, byte> mapGrid;
+        // declare other map data
+        public int mapX, mapY, numberRooms, minRoomSize, maxRoomSize;
         private Random random = new Random();
 
-        public gridMap(int X, int Y, int rms)
+        public GridMap(int X, int Y, int rms)
             {
-            this.dim_x = X;
-            this.dim_y = Y;
-            this.rooms = rms;
-            mapGrid = GenMap(dim_x, dim_y, rooms);
+            this.mapX = X;
+            this.mapY = Y;
+            this.numberRooms = rms;
+            mapGrid = GenerateMap(mapX, mapY, numberRooms);
             }
 
-        public byte getFromMap(int t1, int t2)
+        public byte GetFromMap(int t1, int t2)
             {
             Tuple<int, int> coords = new Tuple<int, int>(t1, t2);
             return mapGrid[coords];
             }
 
-        private Dictionary<Tuple<int, int>, byte> GenMap(int Dim_X, int Dim_Y, int numRooms)
+        private Dictionary<Tuple<int, int>, byte> GenerateMap(int Dim_X, int Dim_Y, int numRooms)
             {
             Dictionary<Tuple<int, int>, byte> workMap = new Dictionary<Tuple<int, int>, byte>();
             // init map
@@ -77,27 +80,29 @@ private Dictionary<Tuple<int, int>, byte> mapGrid;
                 }
        
             List<Tuple<Tuple<int, int>, Tuple<int, int>>> roomList;
-            roomList = genRooms(numRooms, 4, 10);
+            roomList = GenerateRooms(numRooms, 4, 10);
             int rmN = 1;
-            foreach(Tuple<Tuple<int,int>,Tuple<int,int>> room in roomList)
+            byte testCnt = 1;
+            foreach (Tuple<Tuple<int,int>,Tuple<int,int>> room in roomList)
                 {
-                Console.WriteLine("Room " + rmN + ": (" + room.Item1.Item1 + "," + room.Item1.Item2 + ")" + "," + "(" + room.Item2.Item1 + ", " + room.Item2.Item2 + ")");
                 rmN++;
                 IEnumerable<int> xRange = Enumerable.Range(room.Item1.Item1, room.Item2.Item1 - room.Item1.Item1);
                 IEnumerable<int> yRange = Enumerable.Range(room.Item1.Item2, room.Item2.Item2 - room.Item1.Item2);
+                
                 foreach (int x in xRange)
                     {
                     foreach(int y in yRange)
                         {
                         Tuple<int, int> rco = new Tuple<int, int>(x, y);
-                        workMap[rco] = 1;
+                        workMap[rco] = testCnt;
                         }
                     }
+                testCnt++;
                 }
             return workMap;
             }
 
-        private List<Tuple<Tuple<int, int>, Tuple<int, int>>> genRooms(int numRms, int minSz, int maxSz)
+        private List<Tuple<Tuple<int, int>, Tuple<int, int>>> GenerateRooms(int numRms, int minSz, int maxSz)
             {
             List<Tuple<Tuple<int, int>, Tuple<int, int>>> rmLst = new List<Tuple<Tuple<int, int>, Tuple<int, int>>>();
             Tuple<int, int> anchorPos;
@@ -108,22 +113,22 @@ private Dictionary<Tuple<int, int>, byte> mapGrid;
                 while (true)
                     {
                     // Generate upper left corner of room. From point 1 to mapsize - roomsize - 2
-                    anchorPos = new Tuple<int, int>(random.Next(1, this.dim_x - (maxSz + 2)), random.Next(1, this.dim_y - (maxSz + 2)));
+                    anchorPos = new Tuple<int, int>(random.Next(1, this.mapX - (maxSz + 2)), random.Next(1, this.mapY - (maxSz + 2)));
                     // Generate lower right corner of room. From 
                     oppPos = new Tuple<int, int>(anchorPos.Item1 + (random.Next(minSz, maxSz) - 1), anchorPos.Item2 + (random.Next(minSz, maxSz) - 1));
-                    if (checkOverlap(anchorPos, oppPos, rmLst) && (anchorPos.Item1 < oppPos.Item1) && (anchorPos.Item2 < oppPos.Item2))
+                    if (CheckRoomOverlap(anchorPos, oppPos, rmLst) && (anchorPos.Item1 < oppPos.Item1) && (anchorPos.Item2 < oppPos.Item2))
                         {
                         rmLst.Add(new Tuple<Tuple<int, int>, Tuple<int, int>>(anchorPos, oppPos));
                         break;
                         }
-                    if (lim == 200) break;
+                    if (lim == 20000) break;
                     lim++;
                     }
                 }
             return rmLst;
             }
 
-        private bool checkOverlap(Tuple<int, int> anchorPos, Tuple<int, int> oppPos, List<Tuple<Tuple<int, int>, Tuple<int, int>>> rLst)
+        private bool CheckRoomOverlap(Tuple<int, int> anchorPos, Tuple<int, int> oppPos, List<Tuple<Tuple<int, int>, Tuple<int, int>>> rLst)
             {
 
             int cX1 = anchorPos.Item1;
@@ -147,15 +152,14 @@ private Dictionary<Tuple<int, int>, byte> mapGrid;
                 int refY1 = room.Item1.Item2;
                 int refX2 = room.Item2.Item1;
                 int refY2 = room.Item2.Item2;
-                IEnumerable<int> refXRange = Enumerable.Range(refX1 - 1, (refX2 - refX1) - 1);
-                IEnumerable<int> refYRange = Enumerable.Range(refY1 - 1, (refY2 - refY1) - 1);
+                IEnumerable<int> refXRange = Enumerable.Range(refX1 - 1, (refX2 - refX1) + 1);
+                IEnumerable<int> refYRange = Enumerable.Range(refY1 - 1, (refY2 - refY1) + 1);
                 var xinter = cXRange.Intersect(refXRange).DefaultIfEmpty();
                 var yinter = cYRange.Intersect(refYRange).DefaultIfEmpty();
-                    Console.WriteLine(xinter.ElementAt(0));
 
-                    if (xinter.ElementAt(0) == 0 && yinter.ElementAt(0) == 0)
+                if(xinter.ElementAt(0) == 0 && yinter.ElementAt(0) == 0)
                     {
-                    return true;
+                    
                     }
                 else
                     {
@@ -163,20 +167,25 @@ private Dictionary<Tuple<int, int>, byte> mapGrid;
                     }
 
                 } }
-            return false;
+            return true;
             }
 
-        public void printMap()
+        public void PrintMap()
             {
-
-            for (int sub_y = 0; sub_y < this.dim_y; sub_y++)
+            string output;
+            for (int sub_y = 0; sub_y < this.mapY; sub_y++)
                 {
-                for (int sub_x = 0; sub_x < this.dim_x; sub_x++)
+                for (int sub_x = 0; sub_x < this.mapX; sub_x++)
                     {
                     //Position current_coord = new Position(sub_x, sub_y);
                     try
                         {
-                        Console.Write(getFromMap(sub_x, sub_y));
+                        if (GetFromMap(sub_x, sub_y) == 0)
+                            {
+                            output = ".";
+                            }
+                        else output = "X";
+                        Console.Write(output);
                         }
                     catch
                         {
