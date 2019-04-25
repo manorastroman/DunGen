@@ -15,15 +15,19 @@
  *  along with DunGen.  If not, see <https://www.gnu.org/licenses/>.
  */
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace DungeonGen
 {
     class Program
-    {
-        static void Main(string[] args)
         {
+
+        static void Main(string[] args) {
             GridMap map = new GridMap(80, 60, 14);
             map.PrintMap();
+            }  
         }
     }
-}
+    
+

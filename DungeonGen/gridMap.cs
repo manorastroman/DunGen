@@ -18,6 +18,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
+
 namespace DungeonGen
     {
     public class GridMap
@@ -116,11 +117,15 @@ namespace DungeonGen
                     anchorPos = new Tuple<int, int>(random.Next(1, this.mapX - (maxSz + 2)), random.Next(1, this.mapY - (maxSz + 2)));
                     // Generate lower right corner of room. From 
                     oppPos = new Tuple<int, int>(anchorPos.Item1 + (random.Next(minSz, maxSz) - 1), anchorPos.Item2 + (random.Next(minSz, maxSz) - 1));
-                    if (CheckRoomOverlap(anchorPos, oppPos, rmLst) && (anchorPos.Item1 < oppPos.Item1) && (anchorPos.Item2 < oppPos.Item2))
+                    foreach(Tuple<Tuple<int,int>,Tuple<int,int>> rm1 in rmLst)
                         {
-                        rmLst.Add(new Tuple<Tuple<int, int>, Tuple<int, int>>(anchorPos, oppPos));
-                        break;
+                        if (mathFunctions.CheckRoomOverlap(anchorPos, oppPos, rm1.Item1, rm1.Item2) && (anchorPos.Item1 < oppPos.Item1) && (anchorPos.Item2 < oppPos.Item2))
+                            {
+                            rmLst.Add(new Tuple<Tuple<int, int>, Tuple<int, int>>(anchorPos, oppPos));
+                            break;
+                            }
                         }
+                    
                     if (lim == 20000) break;
                     lim++;
                     }
@@ -128,47 +133,7 @@ namespace DungeonGen
             return rmLst;
             }
 
-        private bool CheckRoomOverlap(Tuple<int, int> anchorPos, Tuple<int, int> oppPos, List<Tuple<Tuple<int, int>, Tuple<int, int>>> rLst)
-            {
-
-            int cX1 = anchorPos.Item1;
-            int cY1 = anchorPos.Item2;
-            int cX2 = oppPos.Item1;
-            int cY2 = oppPos.Item2;
-
-
-            IEnumerable<int> cXRange = Enumerable.Range(cX1, (cX2 - cX1));
-            IEnumerable<int> cYRange = Enumerable.Range(cY1, (cY2 - cY1));
-
-            if (rLst.Count == 0)
-                {
-                return true;
-                }
-            else
-                { 
-            foreach (Tuple<Tuple<int, int>, Tuple<int, int>> room in rLst)
-                {
-                int refX1 = room.Item1.Item1;
-                int refY1 = room.Item1.Item2;
-                int refX2 = room.Item2.Item1;
-                int refY2 = room.Item2.Item2;
-                IEnumerable<int> refXRange = Enumerable.Range(refX1 - 1, (refX2 - refX1) + 1);
-                IEnumerable<int> refYRange = Enumerable.Range(refY1 - 1, (refY2 - refY1) + 1);
-                var xinter = cXRange.Intersect(refXRange).DefaultIfEmpty();
-                var yinter = cYRange.Intersect(refYRange).DefaultIfEmpty();
-
-                if(xinter.ElementAt(0) == 0 && yinter.ElementAt(0) == 0)
-                    {
-                    
-                    }
-                else
-                    {
-                    return false;
-                    }
-
-                } }
-            return true;
-            }
+        
 
         public void PrintMap()
             {
@@ -198,5 +163,38 @@ namespace DungeonGen
             }
         }
 
+    public static class mathFunctions
+        {
+        public static bool CheckRoomOverlap(Tuple<int, int> startPos1, Tuple<int, int> endPos1, Tuple<int, int> startPos2, Tuple<int, int> endPos2)
+            {
 
+            /* !!!!The start position needs to be set to the lower in the range.  if x1 = 5 and x2 = 7 you would expect a set of 5,6,7
+             *  if x1= 7 and x2 = 5 you would still expect a set of 5,6,7.
+             * in the range function the lower of the two x values should the the start position. 
+             * **range(x1,|x1-x2| +1) if x1=5 and x2=7 , range(x2,|x2-x1| +1) if x1=7 and x2=5
+             * 
+             */
+            // Ranges of new room.
+            IEnumerable<int> XRange1 = Enumerable.Range(startPos1.Item1, Math.Abs(endPos1.Item1 - startPos1.Item1) + 1);
+            IEnumerable<int> YRange1 = Enumerable.Range(startPos1.Item2, Math.Abs(endPos1.Item2 - startPos1.Item2) + 1);
+            // Ranges of reference room.
+            IEnumerable<int> XRange2 = Enumerable.Range(startPos2.Item1, Math.Abs(endPos2.Item1 - startPos2.Item1) + 1);
+            IEnumerable<int> YRange2 = Enumerable.Range(startPos2.Item2, Math.Abs(endPos2.Item2 - startPos2.Item2) + 1);
+
+
+            // check for intersections. return -1 if empty
+            var xinter = XRange1.Intersect(XRange2).DefaultIfEmpty();
+            var yinter = YRange1.Intersect(YRange2).DefaultIfEmpty();
+            
+
+            if (xinter.ElementAt(0) == 0 | yinter.ElementAt(0) == 0)
+                {
+                return true;
+                }
+            else
+                {
+                return false;
+                }
+            }
+        }
     }

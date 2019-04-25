@@ -1,0 +1,17 @@
+C:\Users\axw82ch\source\repos\DunGen\CheckOverlapUnitTest\bin\Debug\netcoreapp2.1\Microsoft.VisualStudio.TestPlatform.MSTest.TestAdapter.dll
+C:\Users\axw82ch\source\repos\DunGen\CheckOverlapUnitTest\bin\Debug\netcoreapp2.1\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.Interface.dll
+C:\Users\axw82ch\source\repos\DunGen\CheckOverlapUnitTest\bin\Debug\netcoreapp2.1\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.dll
+C:\Users\axw82ch\source\repos\DunGen\CheckOverlapUnitTest\bin\Debug\netcoreapp2.1\CheckOverlapUnitTest.deps.json
+C:\Users\axw82ch\source\repos\DunGen\CheckOverlapUnitTest\bin\Debug\netcoreapp2.1\CheckOverlapUnitTest.runtimeconfig.json
+C:\Users\axw82ch\source\repos\DunGen\CheckOverlapUnitTest\bin\Debug\netcoreapp2.1\CheckOverlapUnitTest.runtimeconfig.dev.json
+C:\Users\axw82ch\source\repos\DunGen\CheckOverlapUnitTest\bin\Debug\netcoreapp2.1\CheckOverlapUnitTest.dll
+C:\Users\axw82ch\source\repos\DunGen\CheckOverlapUnitTest\bin\Debug\netcoreapp2.1\CheckOverlapUnitTest.pdb
+C:\Users\axw82ch\source\repos\DunGen\CheckOverlapUnitTest\bin\Debug\netcoreapp2.1\DungeonGen.dll
+C:\Users\axw82ch\source\repos\DunGen\CheckOverlapUnitTest\bin\Debug\netcoreapp2.1\DungeonGen.pdb
+C:\Users\axw82ch\source\repos\DunGen\CheckOverlapUnitTest\obj\Debug\netcoreapp2.1\CheckOverlapUnitTest.csprojAssemblyReference.cache
+C:\Users\axw82ch\source\repos\DunGen\CheckOverlapUnitTest\obj\Debug\netcoreapp2.1\CheckOverlapUnitTest.csproj.CoreCompileInputs.cache
+C:\Users\axw82ch\source\repos\DunGen\CheckOverlapUnitTest\obj\Debug\netcoreapp2.1\CheckOverlapUnitTest.AssemblyInfoInputs.cache
+C:\Users\axw82ch\source\repos\DunGen\CheckOverlapUnitTest\obj\Debug\netcoreapp2.1\CheckOverlapUnitTest.AssemblyInfo.cs
+C:\Users\axw82ch\source\repos\DunGen\CheckOverlapUnitTest\obj\Debug\netcoreapp2.1\CheckOverlapUnitTest.csproj.CopyComplete
+C:\Users\axw82ch\source\repos\DunGen\CheckOverlapUnitTest\obj\Debug\netcoreapp2.1\CheckOverlapUnitTest.dll
+C:\Users\axw82ch\source\repos\DunGen\CheckOverlapUnitTest\obj\Debug\netcoreapp2.1\CheckOverlapUnitTest.pdb
