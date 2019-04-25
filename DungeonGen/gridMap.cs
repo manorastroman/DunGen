@@ -117,12 +117,19 @@ namespace DungeonGen
                     anchorPos = new Tuple<int, int>(random.Next(1, this.mapX - (maxSz + 2)), random.Next(1, this.mapY - (maxSz + 2)));
                     // Generate lower right corner of room. From 
                     oppPos = new Tuple<int, int>(anchorPos.Item1 + (random.Next(minSz, maxSz) - 1), anchorPos.Item2 + (random.Next(minSz, maxSz) - 1));
-                    foreach(Tuple<Tuple<int,int>,Tuple<int,int>> rm1 in rmLst)
+                    if (rmLst.Count == 0)
                         {
-                        if (mathFunctions.CheckRoomOverlap(anchorPos, oppPos, rm1.Item1, rm1.Item2) && (anchorPos.Item1 < oppPos.Item1) && (anchorPos.Item2 < oppPos.Item2))
+                        rmLst.Add(new Tuple<Tuple<int, int>, Tuple<int, int>>(anchorPos, oppPos));
+                        }
+                    else
+                        {
+                        foreach (Tuple<Tuple<int, int>, Tuple<int, int>> rm1 in rmLst)
                             {
-                            rmLst.Add(new Tuple<Tuple<int, int>, Tuple<int, int>>(anchorPos, oppPos));
-                            break;
+                            if (mathFunctions.CheckRoomOverlap(anchorPos, oppPos, rm1.Item1, rm1.Item2))
+                                {
+                                rmLst.Add(new Tuple<Tuple<int, int>, Tuple<int, int>>(anchorPos, oppPos));
+                                break;
+                                }
                             }
                         }
                     
