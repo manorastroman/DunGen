@@ -174,12 +174,22 @@ namespace DungeonGen
              * **range(x1,|x1-x2| +1) if x1=5 and x2=7 , range(x2,|x2-x1| +1) if x1=7 and x2=5
              * 
              */
+             // make start the lowest value and end the highest value.
+            int sx1 = Math.Min(startPos1.Item1, endPos1.Item1);
+            int ex1 = Math.Max(startPos1.Item1, endPos1.Item1);
+            int sy1 = Math.Min(startPos1.Item2, endPos1.Item2);
+            int ey1 = Math.Max(startPos1.Item2, endPos1.Item2);
+            int sx2 = Math.Min(startPos2.Item1, endPos2.Item1);
+            int ex2 = Math.Max(startPos2.Item1, endPos2.Item1);
+            int sy2 = Math.Min(startPos2.Item2, endPos2.Item2);
+            int ey2 = Math.Max(startPos2.Item2, endPos2.Item2);
+
             // Ranges of new room.
-            IEnumerable<int> XRange1 = Enumerable.Range(startPos1.Item1, Math.Abs(endPos1.Item1 - startPos1.Item1) + 1);
-            IEnumerable<int> YRange1 = Enumerable.Range(startPos1.Item2, Math.Abs(endPos1.Item2 - startPos1.Item2) + 1);
+            IEnumerable<int> XRange1 = Enumerable.Range(sx1, Math.Abs(ex1 - sx1) + 1);
+            IEnumerable<int> YRange1 = Enumerable.Range(sy1, Math.Abs(ey1 - sy1) + 1);
             // Ranges of reference room.
-            IEnumerable<int> XRange2 = Enumerable.Range(startPos2.Item1, Math.Abs(endPos2.Item1 - startPos2.Item1) + 1);
-            IEnumerable<int> YRange2 = Enumerable.Range(startPos2.Item2, Math.Abs(endPos2.Item2 - startPos2.Item2) + 1);
+            IEnumerable<int> XRange2 = Enumerable.Range(sx2, Math.Abs(ex2 - sx2) + 1);
+            IEnumerable<int> YRange2 = Enumerable.Range(sy2, Math.Abs(ey2 - sy2) + 1);
 
 
             // check for intersections. return -1 if empty

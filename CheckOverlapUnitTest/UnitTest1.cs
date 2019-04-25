@@ -10,8 +10,8 @@ namespace CheckOverlapUnitTest
         
 
         private const bool Expected = false;
-        private Tuple<int, int> Rm1st = new Tuple<int, int>(3, 7);
-        private Tuple<int, int> Rm1en = new Tuple<int, int>(8, 5);
+        private Tuple<int, int> Rm1st = new Tuple<int, int>(15, 7);
+        private Tuple<int, int> Rm1en = new Tuple<int, int>(6, 5);
         private Tuple<int, int> Rm2st = new Tuple<int, int>(3, 2);
         private Tuple<int, int> Rm2en = new Tuple<int, int>(8, 6);
 
