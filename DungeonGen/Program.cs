@@ -24,7 +24,7 @@ namespace DungeonGen
         {
 
         static void Main(string[] args) {
-            GridMap map = new GridMap(80, 60, 14);
+            GridMap map = new GridMap(80, 60, 25);
             map.PrintMap();
             }  
         }
