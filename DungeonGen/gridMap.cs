@@ -95,7 +95,7 @@ namespace DungeonGen
                     foreach(int y in yRange)
                         {
                         Tuple<int, int> rco = new Tuple<int, int>(x, y);
-                        workMap[rco] = testCnt;
+                        workMap[rco] = testCnt; // need routine to define tile types
                         }
                     }
                 testCnt++;
@@ -105,8 +105,6 @@ namespace DungeonGen
 
         private List<Tuple<Tuple<int, int>, Tuple<int, int>>> GenerateRooms(int numRms, int minSz, int maxSz)
             {
-            Console.WriteLine("Number of rooms: " + numRms);
-            int rmCount = 0;
             List<Tuple<Tuple<int, int>, Tuple<int, int>>> rmLst = new List<Tuple<Tuple<int, int>, Tuple<int, int>>>();
             Tuple<int, int> anchorPos;
             Tuple<int, int> oppPos;
@@ -122,7 +120,6 @@ namespace DungeonGen
                     if (rmLst.Count == 0)
                         {
                         rmLst.Add(new Tuple<Tuple<int, int>, Tuple<int, int>>(anchorPos, oppPos));
-                        rmCount++;
                         break;
                         }
                     else
@@ -139,7 +136,6 @@ namespace DungeonGen
                         if (rmChk == true)
                             {
                             rmLst.Add(new Tuple<Tuple<int, int>, Tuple<int, int>>(anchorPos, oppPos));
-                            rmCount++;
                             break;
                             }
                         }
@@ -148,7 +144,6 @@ namespace DungeonGen
                     lim++;
                     }
                 }
-            Console.WriteLine(rmCount);
             return rmLst;
             }
 
